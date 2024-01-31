@@ -26,6 +26,9 @@ namespace MuteMEe
             Thread thread = new Thread(MonitorDeviceConnection);
             thread.Start();
         }
+        /// <summary>
+        /// Monitors the connection status of the selected Bluetooth device and mutes the system volume if the device is disconnected.
+        /// </summary>
         private void MonitorDeviceConnection()
         {
             while (true)
@@ -55,6 +58,11 @@ namespace MuteMEe
             selectedDevice = devices.First(d => d.FriendlyName == comboBox1.SelectedItem.ToString());
 
         }
+        /// <summary>
+        /// Event handler for the button1 click event.
+        /// </summary>
+        /// <param name="sender">The object that triggered the event.</param>
+        /// <param name="e">The event arguments.</param>
         private void button1_Click(object sender, EventArgs e)
         {
             if (Authenticate("mySecret"))
@@ -116,7 +124,8 @@ namespace MuteMEe
             // This is a placeholder for actual authentication logic.
             // In a real-world application, NEVER hard-code secrets or passwords.
             // Always retrieve them from secure storage or environment variables.
-            const string hardcodedSecret = "mySecret";
+            string hardcodedSecret = Environment.GetEnvironmentVariable("MY_SECRET") ?? "";
+
 
             if (secret == hardcodedSecret)
             {
