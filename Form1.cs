@@ -38,7 +38,7 @@ namespace MuteMEe
                         defaultDevice.AudioEndpointVolume.Mute = true;
 
                         Invoke(new Action(() => label1.Text = $"The selected Bluetooth device {selectedDevice.FriendlyName} is disconnected. System volume is muted."));
-                       
+
                         button1.BackColor = Color.Red;
                         button1.Text = "Device Disconnected";
                     }
@@ -53,15 +53,23 @@ namespace MuteMEe
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             selectedDevice = devices.First(d => d.FriendlyName == comboBox1.SelectedItem.ToString());
-          
+
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            if (muteMeActive== false && selectedDevice != null && selectedDevice.State.Equals(DeviceState.Active))
+            if (Authenticate("mySecret"))
+            {
+                // Access the database or perform some action
+            }
+            else
+            {
+                // Authentication failed
+            }
+            if (muteMeActive == false && selectedDevice != null && selectedDevice.State.Equals(DeviceState.Active))
                 muteMeActive = true;
             else
-                muteMeActive= false;
-            
+                muteMeActive = false;
+
 
             if (muteMeActive)
             {
@@ -75,8 +83,47 @@ namespace MuteMEe
                 button1.Text = "Paused";
                 Invoke(new Action(() => label1.Text = $"Monitor Mode Stopped!"));
             }
-           
 
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        private bool Authenticate(string secret)
+        {
+            // This is a placeholder for actual authentication logic.
+            // In a real-world application, NEVER hard-code secrets or passwords.
+            // Always retrieve them from secure storage or environment variables.
+            const string hardcodedSecret = "mySecret";
+
+            if (secret == hardcodedSecret)
+            {
+                return true;
+            }
+
+            return false;
         }
 
     }
